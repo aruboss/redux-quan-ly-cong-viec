@@ -9,7 +9,6 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      tasks: [], //id: duy nhat (unique), name, status
       isDisplayForm: false,
       taskEditing: null,
       filter : {
@@ -22,25 +21,17 @@ class App extends Component {
     }
 
   }
-//gọi khi component của mình đc gán vào (khi load lại trang)
-  componentWillMount(){
-      if(localStorage && localStorage.getItem('tasks')){
-        var tasks = JSON.parse(localStorage.getItem('tasks'));
-        this.setState({
-          tasks: tasks
-        });
-      }
-  }
+// //gọi khi component của mình đc gán vào (khi load lại trang)
+//   componentWillMount(){
+//       if(localStorage && localStorage.getItem('tasks')){
+//         var tasks = JSON.parse(localStorage.getItem('tasks'));
+//         this.setState({
+//           tasks: tasks
+//         });
+//       }
+//   }
 
 
-  // random ra 1 số bất kỳ 
-    s4(){
-      return Math.floor((1+Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    generateID(){
-      return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +this.s4() + this.s4() +this.s4();   
-    }
     onToggleForm = () => { //Thêm task
       if(this.state.isDisplayForm && this.state.taskEditing!==null){
         this.setState({
@@ -158,39 +149,39 @@ class App extends Component {
     }
 
   render() {
-    var {tasks, isDisplayForm, taskEditing, filter, keyword, sortBy, sortValue} = this.state;
-    if(filter){
-      if(filter.name){
-        tasks = tasks.filter((task)=>{
-          return task.name.toLowerCase().indexOf(filter.name) !== -1;
-        });
-      }
-      tasks = tasks.filter((task)=>{
-          if(filter.status===-1){
-              return task;
-          }else{
-            return task.status === (filter.status===1?true:false);   
-          }
-        }); 
-    }
-    if(keyword){
-        tasks = tasks.filter((task)=>{
-          return task.name.toLowerCase().indexOf(keyword) !== -1;
-        });
-      }
-      if(sortBy==='name'){
-        tasks.sort((a,b)=>{
-          if(a.name>b.name) return sortValue;
-          else if(a.name<b.name) return -sortValue;
-          else return 0;
-        });
-      }else{
-         tasks.sort((a,b)=>{
-          if(a.status>b.status) return -sortValue;
-          else if(a.status<b.status) return sortValue;
-          else return 0;
-        });
-      }
+    var {isDisplayForm, taskEditing, filter, keyword, sortBy, sortValue} = this.state;
+    // if(filter){
+    //   if(filter.name){
+    //     tasks = tasks.filter((task)=>{
+    //       return task.name.toLowerCase().indexOf(filter.name) !== -1;
+    //     });
+    //   }
+    //   tasks = tasks.filter((task)=>{
+    //       if(filter.status===-1){
+    //           return task;
+    //       }else{
+    //         return task.status === (filter.status===1?true:false);   
+    //       }
+    //     }); 
+    // }
+    // if(keyword){
+    //     tasks = tasks.filter((task)=>{
+    //       return task.name.toLowerCase().indexOf(keyword) !== -1;
+    //     });
+    //   }
+    //   if(sortBy==='name'){
+    //     tasks.sort((a,b)=>{
+    //       if(a.name>b.name) return sortValue;
+    //       else if(a.name<b.name) return -sortValue;
+    //       else return 0;
+    //     });
+    //   }else{
+    //      tasks.sort((a,b)=>{
+    //       if(a.status>b.status) return -sortValue;
+    //       else if(a.status<b.status) return sortValue;
+    //       else return 0;
+    //     });
+    //   }
     var elmTaskForm = isDisplayForm ? <TaskForm onSubmit={this.onSubmit} onCloseForm={this.onCloseForm} taskEditing={taskEditing}/> : '';
     return (
       <div>
