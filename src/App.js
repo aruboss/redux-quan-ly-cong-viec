@@ -57,24 +57,7 @@ class App extends Component {
       });
     }
 
-    onSubmit = (data) => {
-      var {tasks} = this.state;
-      if(data.id===''){
-         data.id = this.generateID();//task
-      tasks.push(data);
-    }else{
-      //edit
-      var index = this.findIndex(data.id);
-      tasks[index]=data;
-    }
-     
-      this.setState({
-        tasks: tasks,
-        taskEditing: null
-      });
-      localStorage.setItem('tasks',JSON.stringify(tasks));
-    }
- 
+    
     onUpdateStatus = (id) => {
       var {tasks} = this.state;
       // var index = this.findIndex(id);
@@ -182,7 +165,10 @@ class App extends Component {
     //       else return 0;
     //     });
     //   }
-    var elmTaskForm = isDisplayForm ? <TaskForm onSubmit={this.onSubmit} onCloseForm={this.onCloseForm} taskEditing={taskEditing}/> : '';
+    var elmTaskForm = isDisplayForm ? <TaskForm 
+                                          onCloseForm={this.onCloseForm} 
+                                          taskEditing={taskEditing}
+                                      /> : '';
     return (
       <div>
         <meta charSet="utf-8" />
