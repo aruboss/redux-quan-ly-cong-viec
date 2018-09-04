@@ -4,12 +4,13 @@ import TaskForm from './components/TaskForm';
 import TaskControl from './components/TaskControl';
 import TaskList from './components/TaskList';
 import {findIndex} from 'lodash';
+import { connect } from 'react-redux';
+import * as actions from './actions/index';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isDisplayForm: false,
       taskEditing: null,
       filter : {
         name: '',
@@ -33,22 +34,19 @@ class App extends Component {
 
 
     onToggleForm = () => { //Thêm task
-      if(this.state.isDisplayForm && this.state.taskEditing!==null){
-        this.setState({
-        isDisplayForm: true,
-        taskEditing: null
-      });
-      }else{
-        this.setState({
-        isDisplayForm: !this.state.isDisplayForm,
-        taskEditing: null
-      });
-      }
-    }
-    onCloseForm = () => {
-      this.setState({
-        isDisplayForm: false
-      });
+      // if(this.state.isDisplayForm && this.state.taskEditing!==null){
+      //   this.setState({
+      //   isDisplayForm: true,
+      //   taskEditing: null
+      // });
+      // }else{
+      //   this.setState({
+      //   isDisplayForm: !this.state.isDisplayForm,
+      //   taskEditing: null
+      // });
+      // }
+
+      this.props.onToggleForm();
     }
 
     onShowForm = () => {
@@ -132,7 +130,9 @@ class App extends Component {
     }
 
   render() {
-    var {isDisplayForm, taskEditing, filter, keyword, sortBy, sortValue} = this.state;
+    var {taskEditing, filter, keyword, sortBy, sortValue} = this.state;
+
+    var {isDisplayForm} = this.props;
     // if(filter){
     //   if(filter.name){
     //     tasks = tasks.filter((task)=>{
@@ -166,7 +166,6 @@ class App extends Component {
     //     });
     //   }
     var elmTaskForm = isDisplayForm ? <TaskForm 
-                                          onCloseForm={this.onCloseForm} 
                                           taskEditing={taskEditing}
                                       /> : '';
     return (
@@ -219,4 +218,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => { //state này là state lấy từ trên store xuống
+  return {
+      isDisplayForm : state.isDisplayForm
+  }
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onToggleForm : () => {
+      dispatch(actions.toggleForm());
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
