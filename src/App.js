@@ -130,7 +130,7 @@ class App extends Component {
     }
 
   render() {
-    var {taskEditing, filter, keyword, sortBy, sortValue} = this.state;
+    var {taskEditing, sortBy, sortValue} = this.state;
 
     var {isDisplayForm} = this.props;
     // if(filter){
