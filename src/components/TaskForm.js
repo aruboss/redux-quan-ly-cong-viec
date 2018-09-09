@@ -75,6 +75,7 @@ class TaskForm extends Component {
 
   render() {
     var {id} = this.state;
+    if(!this.props.isDisplayForm) return '';
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
