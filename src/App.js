@@ -3,7 +3,6 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import TaskControl from './components/TaskControl';
 import TaskList from './components/TaskList';
-import {findIndex} from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from './actions/index';
 
@@ -34,19 +33,12 @@ class App extends Component {
 
 
     onToggleForm = () => { //Thêm task
-      // if(this.state.isDisplayForm && this.state.taskEditing!==null){
-      //   this.setState({
-      //   isDisplayForm: true,
-      //   taskEditing: null
-      // });
-      // }else{
-      //   this.setState({
-      //   isDisplayForm: !this.state.isDisplayForm,
-      //   taskEditing: null
-      // });
-      // }
-
       this.props.onToggleForm();
+      this.props.onClearTask({
+        id : '',
+        name: '',
+        status: false
+      });
     }
 
     onShowForm = () => {
@@ -101,7 +93,7 @@ class App extends Component {
     }
 
   render() {
-    var {taskEditing, sortBy, sortValue} = this.state;
+    var {sortBy, sortValue} = this.state;
 
     var {isDisplayForm} = this.props;
     // if(filter){
@@ -151,7 +143,7 @@ class App extends Component {
           <div className="row">
             <div className={isDisplayForm?"col-xs-4 col-sm-4 col-md-4 col-lg-4":''}>
             {/*Form*/}
-              <TaskForm taskEditing={taskEditing}/>
+              <TaskForm />
             </div>
             <div className={isDisplayForm?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
               <button 
@@ -194,6 +186,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onToggleForm : () => {
       dispatch(actions.toggleForm());
+    },
+    onClearTask : (task) => {
+      dispatch(actions.editTask(task));
     }
   }
 }
