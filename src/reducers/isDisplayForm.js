@@ -1,6 +1,6 @@
 import * as types from './../constants/ActionTypes';
 
-var initialState = false; //close form
+var initialState = false; //close form, giá trị mặc định là true hoặc false
 
 var myReducer = (state = initialState, action) => {
 	switch(action.type){

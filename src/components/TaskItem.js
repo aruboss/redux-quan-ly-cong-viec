@@ -10,8 +10,10 @@ class TaskItem extends Component {
     this.props.onDeleteTask(this.props.task.id);
     this.props.onCloseForm();
   }
-  onUpdate = () => {
-    this.props.onUpdate(this.props.task.id);
+  onEditTask = () => {
+    // this.props.onUpdate(this.props.task.id);
+    this.props.onOpenForm();
+    this.props.onEditTask(this.props.task);
   }
   render() {
     var {task, index} = this.props;
@@ -31,7 +33,7 @@ class TaskItem extends Component {
           <button 
             type="button" 
             className="btn btn-warning"
-            onClick={this.onUpdate}
+            onClick={this.onEditTask}
           >
             <span className="fa fa-pencil mr-5" />Sửa
           </button>
@@ -65,6 +67,12 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onCloseForm : () => {
       dispatch(actions.closeForm());
+    },
+    onOpenForm : () => {
+      dispatch(actions.openForm());
+    },
+    onEditTask: (task) => {
+      dispatch(actions.editTask(task));
     }
   }
 }

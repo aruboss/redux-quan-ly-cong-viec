@@ -21,7 +21,7 @@ var	findIndex = (tasks, id) => {
 
 
 var data = JSON.parse(localStorage.getItem('tasks'));
-var initialState = data ? data : [];
+var initialState = data ? data : []; //giá trị mặc định là 1 arr
 
 var myReducer = (state = initialState, action) => {
 	var id = '';
