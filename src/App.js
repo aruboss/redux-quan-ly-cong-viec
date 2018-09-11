@@ -33,12 +33,19 @@ class App extends Component {
 
 
     onToggleForm = () => { //Thêm task
-      this.props.onToggleForm();
+      var {itemEditing} = this.props;
+      if(itemEditing && itemEditing.id !== ''){
+          this.props.onOpenForm();
+      }else{
+          this.props.onToggleForm();
+      };
+      
       this.props.onClearTask({
-        id : '',
-        name: '',
-        status: false
+            id : '',
+            name: '',
+            status: false
       });
+      
     }
 
     onShowForm = () => {
@@ -178,7 +185,8 @@ class App extends Component {
 
 const mapStateToProps = state => { //state này là state lấy từ trên store xuống
   return {
-      isDisplayForm : state.isDisplayForm
+      isDisplayForm : state.isDisplayForm,
+      itemEditing: state.itemEditing
   }
 };
 
@@ -189,6 +197,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onClearTask : (task) => {
       dispatch(actions.editTask(task));
+    },
+    onOpenForm : () => {
+      dispatch(actions.openForm());
     }
   }
 }
