@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class TaskList extends Component {
   constructor(props){
@@ -15,9 +16,12 @@ class TaskList extends Component {
       var target = event.target;
       var name = target.name;
       var value = target.value;
-      this.props.onFilter(
-        name==='filterName'?value:this.state.filterName,
-        name==='filterStatus'?value:this.state.filterStatus)
+      var filter = {
+            name : name==='filterName'?value:this.state.filterName,
+            status : name==='filterStatus'?value:this.state.filterStatus
+      };
+      this.props.onFilterTable(filter);
+         
       this.setState({
         [name]: value
       });
@@ -25,7 +29,8 @@ class TaskList extends Component {
 
   render() {
     console.log(this.props.tasks);
-    var {tasks} = this.props;
+    var {tasks, filterTable} = this.props;
+    console.log(filterTable);
     var {filterName, filterStatus} = this.state;
     var elmTasks = tasks.map((item,index)=>{
       return <TaskItem 
@@ -79,8 +84,17 @@ class TaskList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    tasks : state.tasks  //danh sach cac todo
+    tasks : state.tasks,  //danh sach cac todo
+    filterTable : state.filterTable
   }
 };
 
-export default connect(mapStateToProps,null)(TaskList);     
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onFilterTable : (filter) => {
+      dispatch(actions.filterTask(filter));
+    }
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskList);     
