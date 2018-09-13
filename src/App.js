@@ -7,103 +7,27 @@ import { connect } from 'react-redux';
 import * as actions from './actions/index';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      taskEditing: null,
-      keyword: '',//phuc vụ tìm kiếm 
-      sortBy: 'name',
-      sortValue: 1
-    }
-
-  }
-// //gọi khi component của mình đc gán vào (khi load lại trang)
-//   componentWillMount(){
-//       if(localStorage && localStorage.getItem('tasks')){
-//         var tasks = JSON.parse(localStorage.getItem('tasks'));
-//         this.setState({
-//           tasks: tasks
-//         });
-//       }
-//   }
-
 
     onToggleForm = () => { //Thêm task
-      var {itemEditing} = this.props;
-      if(itemEditing && itemEditing.id !== ''){
-          this.props.onOpenForm();
-      }else{
-          this.props.onToggleForm();
-      };
-      
-      this.props.onClearTask({
-            id : '',
-            name: '',
-            status: false
-      });
-      
-    }
-
-    onShowForm = () => {
-       this.setState({
-        isDisplayForm: true
-      });
-    }
-
-    
-    findIndex = (id) => {
-      var {tasks} = this.state;
-      var result = -1;
-      tasks.forEach((task,index)=>{
-        if(task.id===id){
-          result=index;
-        }
-      });
-      return result;
-    }
-
-    onUpdate = (id) => {
-      var {tasks} = this.state;
-      var index = this.findIndex(id);
-      var taskEditing =tasks[index];
-      this.setState({//lấy ra thông tin đã nhập, lưu toàn bộ vào mảng tên là taskEditing
-        taskEditing: taskEditing
-      }); 
-      this.onShowForm();
-    }
-
-
-    onSearch = (keyword) => {
-      this.setState({
-        keyword: keyword
-      });
-    }
-
-    onSort = (sortBy, sortValue) => {
-      this.setState({
-        sortBy: sortBy,
-        sortValue: sortValue
-      });
+       var {itemEditing} = this.props;
+       if(itemEditing && itemEditing.id !== ''){
+           this.props.onOpenForm();
+       }else{
+           this.props.onToggleForm();
+       };
+       
+       this.props.onClearTask({
+             id : '',
+             name: '',
+             status: false
+       });
+       
     }
 
   render() {
-    var {sortBy, sortValue} = this.state;
-
+    
     var {isDisplayForm} = this.props;
 
-    //   if(sortBy==='name'){
-    //     tasks.sort((a,b)=>{
-    //       if(a.name>b.name) return sortValue;
-    //       else if(a.name<b.name) return -sortValue;
-    //       else return 0;
-    //     });
-    //   }else{
-    //      tasks.sort((a,b)=>{
-    //       if(a.status>b.status) return -sortValue;
-    //       else if(a.status<b.status) return sortValue;
-    //       else return 0;
-    //     });
-    //   }
     return (
       <div>
         <meta charSet="utf-8" />
@@ -130,12 +54,7 @@ class App extends Component {
                 <span className="fa fa-plus mr-5" />Thêm Công Việc
               </button>
                 {/*tìm kiếm và sắp xếp */}
-                <TaskControl 
-                      onSearch={this.onSearch} 
-                      onSort={this.onSort}
-                      sortBy={sortBy}
-                      sortValue={sortValue}
-                />
+                <TaskControl />
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                   <TaskList 

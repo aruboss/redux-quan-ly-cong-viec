@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class TaskSortControl extends Component {
 
   onClick = (sortBy, sortValue) =>{
-    this.props.onSort(sortBy,sortValue);
+    this.props.onSort({
+        by : sortBy,
+        value : sortValue
+    });
   }
 
   render() {
@@ -17,7 +22,7 @@ class TaskSortControl extends Component {
             <li onClick={()=>this.onClick('name',1)}>
               <a 
                   role="button"
-                  className={(this.props.sortBy==="name"&&this.props.sortValue===1)?'sort_selected':''}
+                  className={(this.props.sort.by==="name"&&this.props.sort.value===1)?'sort_selected':''}
               >
                 <span className="fa fa-sort-alpha-asc pr-5">
                   Tên A-Z
@@ -27,7 +32,7 @@ class TaskSortControl extends Component {
            <li onClick={()=>this.onClick('name',-1)}>
               <a 
                   role="button"
-                  className={(this.props.sortBy==="name"&&this.props.sortValue===-1)?'sort_selected':''}
+                  className={(this.props.sort.by==="name"&&this.props.sort.value===-1)?'sort_selected':''}
               >
                 <span className="fa fa-sort-alpha-desc pr-5">
                   Tên Z-A
@@ -38,7 +43,7 @@ class TaskSortControl extends Component {
             <li onClick={()=>this.onClick('status',1)}>
                <a 
                   role="button"
-                  className={(this.props.sortBy==="status"&&this.props.sortValue===1)?'sort_selected':''}
+                  className={(this.props.sort.by==="status"&&this.props.sort.value===1)?'sort_selected':''}
                >
                 Trạng Thái Kích Hoạt
                 </a>
@@ -46,7 +51,7 @@ class TaskSortControl extends Component {
             <li onClick={()=>this.onClick('status',-1)}>
                 <a 
                   role="button"
-                  className={(this.props.sortBy==="status"&&this.props.sortValue===-1)?'sort_selected':''}
+                  className={(this.props.sort.by==="status"&&this.props.sort.value===-1)?'sort_selected':''}
                 >
                 Trạng Thái Ẩn</a>
             </li>
@@ -57,4 +62,18 @@ class TaskSortControl extends Component {
   }
 }
 
-export default TaskSortControl;     
+const mapStateToProps = (state) => {
+  return {
+    sort : state.sort
+  }
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onSort : (sort) => { //sort.by, sort.value
+      dispatch(actions.sortTask(sort));
+    }
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskSortControl);     
