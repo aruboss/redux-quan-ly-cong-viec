@@ -90,13 +90,7 @@ class App extends Component {
     var {sortBy, sortValue} = this.state;
 
     var {isDisplayForm} = this.props;
-    // if(filter){
-    
-    // if(keyword){
-    //     tasks = tasks.filter((task)=>{
-    //       return task.name.toLowerCase().indexOf(keyword) !== -1;
-    //     });
-    //   }
+
     //   if(sortBy==='name'){
     //     tasks.sort((a,b)=>{
     //       if(a.name>b.name) return sortValue;

@@ -58,3 +58,10 @@ export const filterTask = (filter) => {
 		filter  //filter : filter -> filterName, filterStatus
 	}
 };
+
+export const searchTask = (keyword) => {
+	return {
+		type: types.SEARCH,
+		keyword
+	}
+};
