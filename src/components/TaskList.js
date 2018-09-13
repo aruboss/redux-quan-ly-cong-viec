@@ -31,6 +31,19 @@ class TaskList extends Component {
     console.log(this.props.tasks);
     var {tasks, filterTable} = this.props;
     console.log(filterTable);
+    //filter on Table
+      if(filterTable.name){
+        tasks = tasks.filter((task)=>{
+          return task.name.toLowerCase().indexOf(filterTable.name) !== -1;
+        });
+      }
+      tasks = tasks.filter((task)=>{
+          if(filterTable.status===-1){
+              return task;
+          }else{
+            return task.status === (filterTable.status===1?true:false);   
+          }
+        }); 
     var {filterName, filterStatus} = this.state;
     var elmTasks = tasks.map((item,index)=>{
       return <TaskItem 
