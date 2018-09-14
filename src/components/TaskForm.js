@@ -56,7 +56,6 @@ class TaskForm extends Component {
 
   onSave = (event) => { 
     event.preventDefault();
-    // this.props.onSubmit(this.state);
     //them du lieu
     this.props.onSaveTask(this.state);
     //clear và close form
