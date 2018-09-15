@@ -7,7 +7,7 @@ var initialState = {
 }; //giá trị mặc định là 1 object
 
 var myReducer = (state = initialState, action) => {
-	switch(action.type){
+	switch (action.type) {
 		case types.EDIT_TASK:
 			return action.task;
 		default: return state;

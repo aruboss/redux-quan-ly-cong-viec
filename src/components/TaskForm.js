@@ -4,40 +4,40 @@ import * as actions from './../actions/index';
 
 class TaskForm extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-      this.state = {
-        id:'',
-        name: '',
-        status: false
+    this.state = {
+      id: '',
+      name: '',
+      status: false
     }
   }
 
-  componentWillMount(){
-    if(this.props.itemEditing && this.props.itemEditing.id !== null){
+  componentWillMount() {
+    if (this.props.itemEditing && this.props.itemEditing.id !== null) {
       this.setState({
         id: this.props.itemEditing.id,
         name: this.props.itemEditing.name,
         status: this.props.itemEditing.status
       });
-    }else{
+    } else {
       this.onClear();
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps && nextProps.itemEditing){//su dung khi chuyen tu them -> edit
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.itemEditing) {//su dung khi chuyen tu them -> edit
       this.setState({
         id: nextProps.itemEditing.id,
         name: nextProps.itemEditing.name,
         status: nextProps.itemEditing.status
       });
-    }else {
+    } else {
       this.onClear();
     };
   }
 
- 
+
   onCloseForm = () => {
     this.props.onCloseForm();
   }
@@ -46,7 +46,7 @@ class TaskForm extends Component {
     var target = event.target;
     var name = target.name;
     var value = target.value;
-    if(name === 'status'){
+    if (name === 'status') {
       value = target.value === 'true' ? true : false;
     }
     this.setState({
@@ -54,7 +54,7 @@ class TaskForm extends Component {
     });
   }
 
-  onSave = (event) => { 
+  onSave = (event) => {
     event.preventDefault();
     //them du lieu
     this.props.onSaveTask(this.state);
@@ -71,13 +71,13 @@ class TaskForm extends Component {
   }
 
   render() {
-    var {id} = this.state;
-    if(!this.props.isDisplayForm) return null;
+    var { id } = this.state;
+    if (!this.props.isDisplayForm) return null;
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
           <h3 className="panel-title">
-            {id !== '' ? 'Cập Nhật Công Việc' : 'Thêm Công Việc' }
+            {id !== '' ? 'Cập Nhật Công Việc' : 'Thêm Công Việc'}
             <span
               className="fa fa-times-circle text-right" aria-hidden="true"
               onClick={this.onCloseForm}
@@ -85,25 +85,25 @@ class TaskForm extends Component {
           </h3>
         </div>
         <div className="panel-body">
-        {/*đặt submit ở form*/}
+          {/*đặt submit ở form*/}
           <form onSubmit={this.onSave}>
             <div className="form-group">
               <label>Tên :</label>
-              <input 
-                  className="form-control" 
-                  type="text" 
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
+              <input
+                className="form-control"
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
               />
             </div>
             <label>Trạng Thái :</label>
-            <select 
-                  className="form-control" 
-                  required="required"
-                  name="status"
-                  value={this.state.status}
-                  onChange={this.onChange}
+            <select
+              className="form-control"
+              required="required"
+              name="status"
+              value={this.state.status}
+              onChange={this.onChange}
             >
               <option value={true}>Kích Hoạt</option>
               <option value={false}>Ẩn</option>
@@ -122,20 +122,20 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
   return {
-      isDisplayForm : state.isDisplayForm,
-      itemEditing: state.itemEditing
+    isDisplayForm: state.isDisplayForm,
+    itemEditing: state.itemEditing
   }
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onSaveTask : (task) => {
-        dispatch(actions.saveTask(task));
+    onSaveTask: (task) => {
+      dispatch(actions.saveTask(task));
     },
-    onCloseForm : () => {
+    onCloseForm: () => {
       dispatch(actions.closeForm());
     }
   }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(TaskForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

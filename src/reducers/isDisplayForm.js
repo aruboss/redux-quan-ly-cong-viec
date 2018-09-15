@@ -3,7 +3,7 @@ import * as types from './../constants/ActionTypes';
 var initialState = false; //close form, giá trị mặc định là true hoặc false
 
 var myReducer = (state = initialState, action) => {
-	switch(action.type){
+	switch (action.type) {
 		case types.TOGGLE_FORM:
 			return !state;
 		case types.CLOSE_FORM:
